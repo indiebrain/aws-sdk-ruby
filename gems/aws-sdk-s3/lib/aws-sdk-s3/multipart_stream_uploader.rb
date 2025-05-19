@@ -45,6 +45,9 @@ module Aws
       # @option options [required,String] :key
       # @return [Seahorse::Client::Response] - the CompleteMultipartUploadResponse
       def upload(options = {}, &block)
+        puts "----------"
+        puts " <-------------- Here is the wumpus"
+        puts ----------
         Aws::Plugins::UserAgent.feature('s3-transfer') do
           upload_id = initiate_upload(options)
           parts = upload_parts(upload_id, options, &block)
