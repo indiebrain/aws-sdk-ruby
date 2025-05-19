@@ -45,9 +45,6 @@ module Aws
       # @option options [required,String] :key
       # @return [Seahorse::Client::Response] - the CompleteMultipartUploadResponse
       def upload(options = {}, &block)
-        puts "----------"
-        puts " <-------------- Here is the wumpus"
-        puts ----------
         Aws::Plugins::UserAgent.feature('s3-transfer') do
           upload_id = initiate_upload(options)
           parts = upload_parts(upload_id, options, &block)
@@ -58,10 +55,12 @@ module Aws
       private
 
       def initiate_upload(options)
+        puts "Aws::S3::MultipartStreamUploader#initiate_upload options: '#{options}'"
         @client.create_multipart_upload(create_opts(options)).upload_id
       end
 
       def complete_upload(upload_id, parts, options)
+        puts "Aws::S3::MultipartStreamUploader#complete_upload upload_id:'#{upload_id}' options:'#{options}'"
         @client.complete_multipart_upload(
           **complete_opts(options).merge(
             upload_id: upload_id,
@@ -71,6 +70,7 @@ module Aws
       end
 
       def upload_parts(upload_id, options, &block)
+        puts "Aws::S3::MultipartStreamUploader#upload_parts upload_id:'#{upload_id}' options:'#{options}'"
         completed = Queue.new
         thread_errors = []
         errors = begin
