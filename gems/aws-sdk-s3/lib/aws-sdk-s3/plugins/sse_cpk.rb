@@ -20,6 +20,7 @@ This should only be disabled for local testing.
         class Handler < Seahorse::Client::Handler
 
           def call(context)
+            puts "Aws::S3::Plugins::SseCpk#call #{context}"
             compute_key_md5(context) if context.params.is_a?(Hash)
             @handler.call(context)
           end
@@ -27,13 +28,16 @@ This should only be disabled for local testing.
           private
 
           def compute_key_md5(context)
+            puts "Aws::S3::Plugins::SseCpk#comput_key_md5 #{context}"
             params = context.params
             if key = params[:sse_customer_key]
+              puts "Aws::S3::Plugins::SseCpk#comput_key_md5 sse_customer_key #{key}"
               require_https(context)
               params[:sse_customer_key] = base64(key)
               params[:sse_customer_key_md5] = base64(md5(key))
             end
             if key = params[:copy_source_sse_customer_key]
+              puts "Aws::S3::Plugins::SseCpk#comput_key_md5 copy_source_sse_customer_key #{key}"
               require_https(context)
               params[:copy_source_sse_customer_key] = base64(key)
               params[:copy_source_sse_customer_key_md5] = base64(md5(key))
@@ -41,6 +45,7 @@ This should only be disabled for local testing.
           end
 
           def require_https(context)
+            puts "Aws::S3::Plugins::SseCpk#require_https config endpoint #{context.config.endpoint}"
             unless URI::HTTPS === context.config.endpoint
               msg = <<-MSG.strip.gsub("\n", ' ')
                 Attempting to send customer-provided-keys for S3
