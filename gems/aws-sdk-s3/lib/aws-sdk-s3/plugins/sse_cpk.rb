@@ -22,8 +22,6 @@ This should only be disabled for local testing.
           def call(context)
             puts "Aws::S3::Plugins::SseCpk#call #{context}"
             compute_key_md5(context) if context.params.is_a?(Hash)
-
-            puts "Aws::S3::Plugins::SseCpk#handler #{@handler}"
             @handler.call(context)
           end
 
