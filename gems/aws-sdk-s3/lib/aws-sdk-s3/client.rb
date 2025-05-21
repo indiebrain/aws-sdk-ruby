@@ -922,6 +922,7 @@ module Aws::S3
     # @overload complete_multipart_upload(params = {})
     # @param [Hash] params ({})
     def complete_multipart_upload(params = {}, options = {})
+      puts "Aws::S3::Client#complete_multipart_upload params: #{params} options: #{options}"
       req = build_request(:complete_multipart_upload, params)
       req.send_request(options)
     end
