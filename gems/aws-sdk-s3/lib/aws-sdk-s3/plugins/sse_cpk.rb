@@ -30,16 +30,16 @@ This should only be disabled for local testing.
           private
 
           def compute_key_md5(context)
-            puts "Aws::S3::Plugins::SseCpk#comput_key_md5 #{context}"
+            puts "Aws::S3::Plugins::SseCpk#compute_key_md5 #{context}"
             params = context.params
             if key = params[:sse_customer_key]
-              puts "Aws::S3::Plugins::SseCpk#comput_key_md5 sse_customer_key #{key}"
+              puts "Aws::S3::Plugins::SseCpk#compute_key_md5 sse_customer_key #{key}"
               require_https(context)
               params[:sse_customer_key] = base64(key)
               params[:sse_customer_key_md5] = base64(md5(key))
             end
             if key = params[:copy_source_sse_customer_key]
-              puts "Aws::S3::Plugins::SseCpk#comput_key_md5 copy_source_sse_customer_key #{key}"
+              puts "Aws::S3::Plugins::SseCpk#compute_key_md5 copy_source_sse_customer_key #{key}"
               require_https(context)
               params[:copy_source_sse_customer_key] = base64(key)
               params[:copy_source_sse_customer_key_md5] = base64(md5(key))

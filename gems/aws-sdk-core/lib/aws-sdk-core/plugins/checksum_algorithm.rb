@@ -86,10 +86,13 @@ module Aws
       # @api private
       class OptionHandler < Seahorse::Client::Handler
         def call(context)
+          puts "Aws::Plugins::ChecksumAlgorithm #{context}"
           context[:http_checksum] ||= {}
 
+          puts "Aws::Plugins::ChecksumAlgorithm http_checksum #{context[:http_checksum]}"
           # validate request configuration
           if (request_input = ChecksumAlgorithm.request_algorithm_selection(context))
+            puts "Aws::Plugins::ChecksumAlgorithm request_input #{requset_input}"
             unless CLIENT_ALGORITHMS.include? request_input
               if (request_input == 'CRC32C')
                 raise ArgumentError, "CRC32C requires crt support - install the aws-crt gem for support."
@@ -108,6 +111,7 @@ module Aws
             context[:http_checksum][:validation_list] = validation_list
           end
 
+          puts "Aws::Plugins::ChecksumAlgorithm validation_list #{context[:http_checksum][:validation_list]}"
           @handler.call(context)
         end
       end
