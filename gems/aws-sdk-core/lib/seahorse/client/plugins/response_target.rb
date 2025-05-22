@@ -28,6 +28,7 @@ module Seahorse
 
           def add_event_listeners(context, target)
             context.http_response.on_headers(200..299) do
+              puts "Seahorse::Client::Plugin::ResponseTarget#on_headers http_response: #{context.http_response}"
               # In a fresh response body will be a StringIO
               # However, when a request is retried we may have
               # an existing ManagedFile or BlockIO and those
@@ -39,6 +40,7 @@ module Seahorse
 
             context.http_response.on_success(200..299) do
               body = context.http_response.body
+              puts "Seahorse::Client::Plugin::ResponseTarget#on_success body: #{body}"
               if body.is_a?(ManagedFile) && body.open?
                 body.close
               end
@@ -46,7 +48,7 @@ module Seahorse
 
             context.http_response.on_error do
               body = context.http_response.body
-
+              puts "Seahorse::Client::Plugin::ResponseTarget#on_error body: #{body}"
               # When using response_target of file we do not want to write
               # error messages to the file.  So set the body to a new StringIO
               if body.is_a? ManagedFile

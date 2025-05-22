@@ -14,6 +14,7 @@ module Seahorse
         class Handler < Client::Handler
           def call(context)
             response = @handler.call(context)
+            puts "Seahorse::Client::Plugins::RaiseResponseErrors: response: #{response} error: #{response.error}"
             raise response.error if response.error
             response
           end
