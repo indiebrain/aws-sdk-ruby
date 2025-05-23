@@ -25,6 +25,7 @@ module Aws::S3
     # @param options ({})
     # @option options [Client] :client
     def initialize(options = {})
+      options[:http_wire_trace] = true
       @client = options[:client] || Client.new(options)
     end
 
