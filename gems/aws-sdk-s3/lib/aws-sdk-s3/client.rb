@@ -595,6 +595,7 @@ module Aws::S3
     # @overload abort_multipart_upload(params = {})
     # @param [Hash] params ({})
     def abort_multipart_upload(params = {}, options = {})
+      puts "Aws::S3::Client#abort_multipart_upload params: #{params} options: #{options}"
       req = build_request(:abort_multipart_upload, params)
       req.send_request(options)
     end
@@ -2293,6 +2294,7 @@ module Aws::S3
     # @overload create_multipart_upload(params = {})
     # @param [Hash] params ({})
     def create_multipart_upload(params = {}, options = {})
+      puts "Aws::S3::Client#create_multipart_upload params: #{params} options: #{options}"
       req = build_request(:create_multipart_upload, params)
       req.send_request(options)
     end
@@ -8221,6 +8223,7 @@ module Aws::S3
     # @overload list_multipart_uploads(params = {})
     # @param [Hash] params ({})
     def list_multipart_uploads(params = {}, options = {})
+      puts "Aws::S3::Client#list_multipart_uploads params: #{params} options: #{options}"
       req = build_request(:list_multipart_uploads, params)
       req.send_request(options)
     end
